@@ -8,10 +8,14 @@ local sgsub = string.gsub
 local smatch = string.match
 local table_insert = table.insert
 local json = require("cjson")
+local clone = require "table.clone"
 
 local _M = {}
 
 function _M.clone(o)
+    if clone then
+        return clone(o)
+    end
     local lookup_table = {}
     local function _copy(object)
         if type(object) ~= "table" then
