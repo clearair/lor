@@ -8,10 +8,14 @@ local sgsub = string.gsub
 local smatch = string.match
 local table_insert = table.insert
 local json = require("cjson")
+local ngx_lua_version = ngx.config.ngx_lua_version
 
 local _M = {}
 
 function _M.clone(o)
+    if ngx_lua_version >= 10013 then
+        return  require "table.clone"(o)
+    end
     local lookup_table = {}
     local function _copy(object)
         if type(object) ~= "table" then
